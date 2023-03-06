@@ -25,8 +25,8 @@ const PizzaBlock = ({ title, price, imageUrl, sizes, types }) => {
                 <div className="pizza-block__selector">
                   <ul>
                     {
-                      types.map((typeID) => (
-                        <li key={typeID} onClick={() => setPizzaType(typeID)} className= {typeID === pizzaType ? 'active' : "" }>{pizzaTypeText[typeID]}</li>
+                      types.map((typeID, i) => (
+                        <li key={typeID} onClick={() => setPizzaType(typeID)} className= {i === pizzaType ? 'active' : "" }>{pizzaTypeText[typeID]}</li>
                       ))
                     }
                   </ul>
