@@ -1,17 +1,14 @@
 import React from "react"
 
-const categoryName = ['All', 'Meat', 'Vegetarian', 'Grilled', 'Spicy', 'Closed'];
 
-const Categories = () => {
-    const [category, setCategory] = React.useState(0);
 
-    let onClickSetCategory = (index) => {
-        setCategory(index)
-    } 
+const Categories = ({ setCategoryOnClick, categoryValue }) => {
+    const categoryName = ['All', 'Grilled', 'Meet', 'Closed', 'Spicy', 'Vegetarian'];
+ 
     let pizzasCategory = categoryName.map((value, id) => (
         <li key={id}
-            onClick={() => onClickSetCategory(id)}
-            className={category === id ? 'active' : ''}>
+            onClick={() => setCategoryOnClick(id)}
+            className={categoryValue === id ? 'active' : ''}>
             {value}
         </li>
     ))
@@ -25,4 +22,4 @@ const Categories = () => {
     )
 }
 
-export default Categories
+export default Categories 
