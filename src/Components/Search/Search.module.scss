@@ -1,0 +1,41 @@
+.container{
+    width: 40%;
+    position: relative;
+    
+}
+.input{
+    outline: none;
+    width: 100%;
+    padding: 10px 10px;
+    padding-left: 30px;
+    border: 2px solid rgb(196, 189, 189);
+    border-radius: 10px;
+    opacity: .3;
+    font-size: 18px;
+    &:focus{
+        opacity: 1;
+    }
+    
+}
+.iconSearch{
+    width: 20px;
+    height: 20px;
+    opacity: .3;
+    position: absolute;
+    top: 14px;
+    left: 10px;
+    
+}
+
+
+.iconClose{
+    width: 20px;
+    height: 20px;
+    opacity: .25;
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    &:hover{
+        opacity: .8;
+    }
+}

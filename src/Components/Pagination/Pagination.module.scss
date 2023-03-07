@@ -1,0 +1,36 @@
+.root{
+    display: inline-flex;
+    gap: 10px;
+    a{  
+        display: grid;
+        place-items: center;
+        font-size: 20px;
+        font-weight: 700;
+        width: 50px;
+        height: 50px;
+        border: 2px solid #b6150f;
+        border-radius: 50%;
+        color:#b6150f;
+        cursor: pointer;
+        transition: all 0.3s ease 0s;
+        &:hover{
+            color: #FFF;
+            background-color:#b6150f;
+        }
+    }
+}
+.container{
+   text-align: center;
+}
+:global{
+    .selected{
+        a{
+            background-color: #efb1b1;
+        }
+    }
+}
+
+
+// $background: #d26666;
+// $gray-line: #e7c2c2;
+// $orange: #b6150f;
