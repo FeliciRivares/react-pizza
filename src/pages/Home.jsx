@@ -1,54 +1,115 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import qs from 'qs';
+import { Link, useNavigate } from 'react-router-dom';
 
+
+import { setCategoryValue, setPageCount, setFilters, selectFilter } from '../redux/slice/filterSlice';
 import Categories from '../Components/Categories';
 import Sort from '../Components/Sort';
+import {list} from '../Components/Sort'
 import PizzaBlock from '../Components/PizzaBlock';
 import PizzaBlockLoader from '../Components/PizzaBlock/PizzaBlockLoader';
 import Pagination from '../Components/Pagination';
+import { SearchContext } from '../App';
 
-const Home = ({ searchValue }) => {
-  const [state, setState] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
-  const [categoryValue, setCategoryValue] = React.useState(0);
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const [sortValue, setSortValue] = React.useState({
-    propertyName: 'Popularity',
-    type: 'rating',
-  });
+import { fetchPizzas, selectPizzaData } from '../redux/slice/pizzasSlice';
 
-  let category = categoryValue > 0 ? `&category=${categoryValue}` : '';
-  let sort = sortValue ? `&sortBy=${sortValue.type}` : '';
-  let search = searchValue ? `&search=${searchValue}` : '';
-  let page = currentPage ? `page=${currentPage}` : '';
+const Home = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isMounted = React.useRef(false);
+
+  const { items, status } = useSelector(selectPizzaData);
+
+  const { searchValue } = React.useContext(SearchContext);
+
+  const { categoryValue, sort, currentPage} = useSelector(selectFilter);
+  // const categoryValue = useSelector((state) => state.filterReducer.categoryValue)
+  // const sortValue = useSelector((state) => state.filterReducer.sortValue)
+  // const currentPage = useSelector((state) => state.filterReducer.pageCount)
+  console.log( categoryValue)
+
+  const onClickCategory = (id) => {
+    dispatch(setCategoryValue(id));
+  };
+  
+  // const [state, setState] = React.useState([]);
+  // const [loading, setLoading] = React.useState(true);
+
+  const onChangeCurrentPage = (number) => {
+    dispatch(setPageCount(number));
+  };
+
+
+  const getPizzas = async () => {
+    const sortBy = sort.sortType;
+    const category = categoryValue > 0 ? `category=${categoryValue}` : '';
+    const search = searchValue ? `&search=${searchValue}` : '';
+
+    dispatch(
+      fetchPizzas({
+        sortBy,
+        category,
+        search,
+        currentPage,
+      }),
+    );
+
+    window.scrollTo(0, 0);
+  };
 
   React.useEffect(() => {
-    setLoading(true);
-    fetch(
-      `https://6405e93740597b65de44db55.mockapi.io/items?${page}&limit=8${category}${sort}${search}`,
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        setState(json);
-        setLoading(false);
-      });
-    window.scrollTo(0, 0);
-  }, [category, sort, search, page]);
+    if (isMounted.current) {
+      const params = {
+        categoryValue: categoryValue > 0 ? categoryValue : null,
+        sortType: sort.sortType,
+        currentPage,
+      };
+      const queryString = qs.stringify(params, { skipNulls: true });
+      navigate(`/?${queryString}`);
+    }
+    if (!window.location.search) {
+      console.log(111);
+      fetchPizzas();
+    }
+  }, [categoryValue, sort.sortType, searchValue, currentPage]);
 
-  const skeleton = [...new Array(6)].map((_, index) => <PizzaBlockLoader key={index} />);
-  const pizzas = state.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+  React.useEffect(() => {
+    getPizzas();
+  }, [categoryValue, sort.sortType, searchValue, currentPage]);
+
+  React.useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1));
+      const sort = list.find((obj) => obj.sortType === params.sortType);
+      if (sort) {
+        params.sort = sort;
+      }
+      dispatch(setFilters(params));
+    }
+    isMounted.current = true;
+  }, []);
+
+
+
+  const skeleton =  [...new Array(6)].map((_, index) => <PizzaBlockLoader key={index} />);
+  // [...new Array(6)].map((_, index) => <Skeleton key={index} />);
+  const pizzas = items.map((obj) => (<Link key={obj.id} to={`/pizza/${obj.id}`}>
+      <PizzaBlock {...obj} />
+       </Link>));
 
   return (
     <div className="container">
       <div className="content__top">
-        <Categories
-          categoryValue={categoryValue}
-          setCategoryOnClick={(id) => setCategoryValue(id)}
-        />
-        <Sort sortValue={sortValue} setSortValueOnClick={(obj) => setSortValue(obj)} />
+        <Categories categoryValue={categoryValue} setCategoryOnClick={onClickCategory} />
+        <Sort
+        //  value={sortValue} 
+         />
       </div>
       <h2 className="content__title">All pizzas</h2>
-      <div className="content__items">{loading ? skeleton : pizzas}</div>
-      <Pagination setCurrentPage={setCurrentPage} />
+      <div className="content__items">{status === 'loading' ? skeleton : pizzas}</div>
+      <Pagination currentPage={currentPage} setCurrentPage={onChangeCurrentPage} />
     </div>
   );
 };

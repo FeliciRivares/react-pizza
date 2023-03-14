@@ -1,8 +1,6 @@
 import React from "react"
-
-
-
-const Categories = ({ setCategoryOnClick, categoryValue }) => {
+const Categories = (
+    { setCategoryOnClick, categoryValue }) => {
     const categoryName = ['All', 'Grilled', 'Meet', 'Closed', 'Spicy', 'Vegetarian'];
  
     let pizzasCategory = categoryName.map((value, id) => (
