@@ -33,6 +33,7 @@ function Sort() {
       document.body.removeEventListener('click', handleClickOut)
     }
   }, [])
+  
   return (
 
     <div ref={sortRef} className="sort">

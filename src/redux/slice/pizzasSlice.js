@@ -31,12 +31,12 @@ export const fetchPizzas = createAsyncThunk('pizza/fetchPizzasStatus', async (pa
         state.items = [];
       },
       [fetchPizzas.fulfilled]: (state, action) => {
-        console.log(action, 'fulfilled');
+        // console.log(action, 'fulfilled');
         state.items = action.payload;
         state.status = 'success';
       },
       [fetchPizzas.rejected]: (state, action) => {
-        console.log(action, 'rejected');
+        // console.log(action, 'rejected');
         state.status = 'error';
         state.items = [];
       },

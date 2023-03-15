@@ -20,6 +20,9 @@ export const filterSlice = createSlice({
     setSortValue(state, action) {
       state.sort = action.payload;
     },
+    setSearchValue(state, action) {
+      state.searchValue = action.payload;
+    },
     setPageCount(state, action) {
       state.currentPage = action.payload;
     },
@@ -43,6 +46,6 @@ export const filterSlice = createSlice({
 export const selectFilter = (state) => state.filter;
 export const selectSort = (state) => state.filter.sort;
 
-export const { setCategoryValue, setSortValue, setPageCount, setFilters } = filterSlice.actions;
+export const { setCategoryValue, setSortValue, setPageCount, setFilters, setSearchValue } = filterSlice.actions;
 
 export default filterSlice.reducer;

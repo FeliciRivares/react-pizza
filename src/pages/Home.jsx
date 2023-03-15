@@ -11,7 +11,7 @@ import {list} from '../Components/Sort'
 import PizzaBlock from '../Components/PizzaBlock';
 import PizzaBlockLoader from '../Components/PizzaBlock/PizzaBlockLoader';
 import Pagination from '../Components/Pagination';
-import { SearchContext } from '../App';
+// import { SearchContext } from '../App';
 
 import { fetchPizzas, selectPizzaData } from '../redux/slice/pizzasSlice';
 
@@ -22,20 +22,13 @@ const Home = () => {
 
   const { items, status } = useSelector(selectPizzaData);
 
-  const { searchValue } = React.useContext(SearchContext);
+  // const { searchValue } = React.useContext(SearchContext);
 
-  const { categoryValue, sort, currentPage} = useSelector(selectFilter);
-  // const categoryValue = useSelector((state) => state.filterReducer.categoryValue)
-  // const sortValue = useSelector((state) => state.filterReducer.sortValue)
-  // const currentPage = useSelector((state) => state.filterReducer.pageCount)
-  console.log( categoryValue)
+  const { categoryValue, sort, currentPage, searchValue} = useSelector(selectFilter);
 
   const onClickCategory = (id) => {
     dispatch(setCategoryValue(id));
   };
-  
-  // const [state, setState] = React.useState([]);
-  // const [loading, setLoading] = React.useState(true);
 
   const onChangeCurrentPage = (number) => {
     dispatch(setPageCount(number));
@@ -70,14 +63,13 @@ const Home = () => {
       navigate(`/?${queryString}`);
     }
     if (!window.location.search) {
-      console.log(111);
       fetchPizzas();
     }
-  }, [categoryValue, sort.sortType, searchValue, currentPage]);
+  }, [categoryValue, sort.sortType, searchValue, currentPage, navigate]);
 
   React.useEffect(() => {
     getPizzas();
-  }, [categoryValue, sort.sortType, searchValue, currentPage]);
+  }, [categoryValue, sort.sortType, searchValue, currentPage]); 
 
   React.useEffect(() => {
     if (window.location.search) {
@@ -89,7 +81,7 @@ const Home = () => {
       dispatch(setFilters(params));
     }
     isMounted.current = true;
-  }, []);
+  }, [dispatch]);
 
 
 
