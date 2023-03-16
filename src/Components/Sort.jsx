@@ -16,23 +16,24 @@ function Sort() {
   const sort = useSelector(selectSort)
   const dispatch = useDispatch()
   const sortRef = React.useRef()
+  // console.log(sortRef)
   
   const onClickListItems = (obj) => {
     dispatch(setSortValue(obj));
     setOpen(false);
   };
-  React.useEffect(() =>{
-    const handleClickOut = (event) => {
-      if(!event.path.includes(sortRef.current)){
-        setOpen(false)
-      }
-    }
-    document.body.addEventListener('click', handleClickOut)
+  // React.useEffect(() =>{
+  //   const handleClickOut = (e) => {
+  //     console.log(e)
+  //     if(!e.path.includes(sortRef.current)){
+  //       setOpen(false)
+  //     }
+  //   }
+  //   document.body.addEventListener('click', handleClickOut)
 
-    return () => {
-      document.body.removeEventListener('click', handleClickOut)
-    }
-  }, [])
+  //   return () => document.body.removeEventListener('click', handleClickOut)
+    
+  // }, [])
   
   return (
 

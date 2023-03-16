@@ -1,18 +1,30 @@
 import React from "react"
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem, selectCartItemById } from "../../redux/slice/cartSlice";
 
-const PizzaBlock = ({ title, price, imageUrl, sizes, types }) => {
+const PizzaBlock = ({id, title, price, imageUrl, sizes, types }) => {
 
-    const [pizzaCurrent, setPizzaCurrent ] = React.useState(0);
+    const pizzaTypeText = ["thin", "traditional"]
+    const dispatch = useDispatch()
+    const cartItem = useSelector(selectCartItemById(id));
+
     const [pizzaSize, setPizzaSize ] = React.useState(0);
     const [pizzaType, setPizzaType ] = React.useState(0);
 
-    const pizzaTypeText = ["thin", "traditional"]
+    const addedCount = cartItem ? cartItem.count : 0;
 
-    let pizzaButtonOnClick = () =>{
-        setPizzaCurrent (
-            pizzaCurrent + 1
-        )
+    const addToCart = () => {
+      const item = {
+        id,
+        title,
+        price,
+        imageUrl,
+        sizes: sizes[pizzaSize],
+        type: pizzaTypeText[pizzaType]
+      }
+      dispatch(addItem(item))
     }
+
     return (
         <div className="pizza-block">
                 <img
@@ -25,21 +37,21 @@ const PizzaBlock = ({ title, price, imageUrl, sizes, types }) => {
                   <ul>
                     {
                       types.map((typeID, i) => (
-                        <li key={typeID} onClick={() => setPizzaType(typeID)} className= {i === pizzaType ? 'active' : "" }>{pizzaTypeText[typeID]}</li>
+                        <li key={typeID} onClick={() => setPizzaType(typeID)} className= {pizzaType === i ? 'active' : ''}>{pizzaTypeText[typeID]}</li>
                       ))
                     }
                   </ul>
                   <ul>
                     {
-                      sizes.map((value, id) => (
-                        <li key = {id} onClick={() => setPizzaSize(id)} className= {id === pizzaSize ? 'active' : "" }>{value} cm.</li>
+                      sizes.map((size, i) => (
+                        <li key = {size} onClick={() => setPizzaSize(i)} className= {pizzaSize === i ? 'active' : ''}>{size} cm.</li>
                       ))
                     }
                   </ul>
                 </div>
                 <div className="pizza-block__bottom">
                   <div className="pizza-block__price">from UAH {price} </div>
-                  <button onClick={pizzaButtonOnClick} className="button button--outline button--add">
+                  <button onClick={addToCart} className="button button--outline button--add">
                     <svg
                       width="12"
                       height="12"
@@ -53,7 +65,7 @@ const PizzaBlock = ({ title, price, imageUrl, sizes, types }) => {
                       />
                     </svg>
                     <span>To cart</span>
-                    <i>{pizzaCurrent}</i>
+                    {addedCount > 0 && <i>{addedCount}</i>}
                   </button>
                 </div>
               </div> 

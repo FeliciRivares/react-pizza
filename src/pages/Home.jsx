@@ -65,7 +65,7 @@ const Home = () => {
     if (!window.location.search) {
       fetchPizzas();
     }
-  }, [categoryValue, sort.sortType, searchValue, currentPage, navigate]);
+  }, [categoryValue, sort.sortType, searchValue, currentPage]);
 
   React.useEffect(() => {
     getPizzas();
@@ -81,23 +81,23 @@ const Home = () => {
       dispatch(setFilters(params));
     }
     isMounted.current = true;
-  }, [dispatch]);
+  }, []);
 
 
 
   const skeleton =  [...new Array(6)].map((_, index) => <PizzaBlockLoader key={index} />);
   // [...new Array(6)].map((_, index) => <Skeleton key={index} />);
-  const pizzas = items.map((obj) => (<Link key={obj.id} to={`/pizza/${obj.id}`}>
-      <PizzaBlock {...obj} />
-       </Link>));
+  const pizzas = items.map((obj) => (
+      <Link key={obj.id} to={`/pizza/${obj.id}`}>
+        <PizzaBlock {...obj} />
+       </Link>
+       ));
 
   return (
     <div className="container">
       <div className="content__top">
         <Categories categoryValue={categoryValue} setCategoryOnClick={onClickCategory} />
-        <Sort
-        //  value={sortValue} 
-         />
+        <Sort/>
       </div>
       <h2 className="content__title">All pizzas</h2>
       <div className="content__items">{status === 'loading' ? skeleton : pizzas}</div>
