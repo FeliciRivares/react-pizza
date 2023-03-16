@@ -26,7 +26,7 @@ const Header = () => {
         </Link>
         <Search/>
         <div className="header__cart">
-          {location.pathname !== '/cart' && (
+          {/* {location.pathname !== '/cart' && ( */}
           <Link to="/cart" className="button button--cart">
             <span>{totalPrice} UAH</span>
             <div className="button__delimiter"></div>
@@ -61,7 +61,7 @@ const Header = () => {
             </svg>
             <span>{totalCount}</span>
           </Link>
-          )}
+          {/* )} */}
         </div>
       </div>
     </div>

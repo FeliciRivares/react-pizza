@@ -9,7 +9,6 @@ const CartItem = ({ id, imageUrl, title, sizes, type, price, count }) => {
     const onClickMinusItem = () => dispatch(minusItem(id))
     const onClickAddItem = () => dispatch(addItem({id}))
 
-
     return(
         <>
          <div className="cart__item">
