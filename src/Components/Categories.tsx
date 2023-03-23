@@ -1,5 +1,10 @@
 import React from "react"
-const Categories = (
+
+type CategoriesProps = {
+    categoryValue: number;
+    setCategoryOnClick: any;
+}
+const Categories: React.FC<CategoriesProps> = (
     { setCategoryOnClick, categoryValue }) => {
     const categoryName = ['All', 'Grilled', 'Meet', 'Closed', 'Spicy', 'Vegetarian'];
  
@@ -10,7 +15,6 @@ const Categories = (
             {value}
         </li>
     ))
-
     return(
         <div className="categories">
             <ul>
