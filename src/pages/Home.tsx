@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import qs from 'qs';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 import { setCategoryValue, setPageCount, setFilters, selectFilter } from '../redux/slice/filterSlice';
@@ -15,7 +15,7 @@ import Pagination from '../Components/Pagination';
 
 import { fetchPizzas, selectPizzaData } from '../redux/slice/pizzasSlice';
 
-const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isMounted = React.useRef(false);
@@ -26,11 +26,11 @@ const Home = () => {
 
   const { categoryValue, sort, currentPage, searchValue} = useSelector(selectFilter);
 
-  const onClickCategory = (id) => {
+  const onClickCategory = (id: number) => {
     dispatch(setCategoryValue(id));
   };
 
-  const onChangeCurrentPage = (number) => {
+  const onChangeCurrentPage = (number: number) => {
     dispatch(setPageCount(number));
   };
 
@@ -41,6 +41,7 @@ const Home = () => {
     const search = searchValue ? `&search=${searchValue}` : '';
 
     dispatch(
+      // @ts-ignore
       fetchPizzas({
         sortBy,
         category,
@@ -87,12 +88,12 @@ const Home = () => {
 
   const skeleton =  [...new Array(6)].map((_, index) => <PizzaBlockLoader key={index} />);
   // [...new Array(6)].map((_, index) => <Skeleton key={index} />);
-  const pizzas = items.map((obj) => (
-      <Link key={obj.id} 
+  const pizzas = items.map((obj: any) => (
+      // <Link key={obj.id} 
       // to={`/pizza/${obj.id}`}
-      >
+      // >
         <PizzaBlock {...obj} />
-       </Link>
+      //  </Link>
        ));
 
   return (

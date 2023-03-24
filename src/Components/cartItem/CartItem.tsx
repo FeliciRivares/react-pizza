@@ -15,7 +15,6 @@ type CartItemProps = {
 
 const CartItem: React.FC<CartItemProps> = ({ id, imageUrl, title, sizes, type, price, count }) => {
     const dispatch = useDispatch()
-  console.log(CartItem)
     const onClickRemoveItem = () => dispatch(removeItem(id))
     const onClickMinusItem = () => dispatch(minusItem(id))
     const onClickAddItem = () => dispatch(addItem({id}))

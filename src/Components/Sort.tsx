@@ -13,8 +13,7 @@ export const list: ListItem[] = [
     { propertyName: 'Alphabet', sortType: 'title' },
   ];
 
-
-function Sort() {
+const Sort: React.FC = () => {
 
   const [open, setOpen] = React.useState(false);
 
