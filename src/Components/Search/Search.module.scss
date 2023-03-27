@@ -1,6 +1,9 @@
 .container{
     width: 40%;
     position: relative;
+    @media (max-width: 1040px) {
+        width: 80%;
+      }
     
 }
 .input{

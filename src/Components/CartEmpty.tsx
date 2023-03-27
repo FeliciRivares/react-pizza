@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import cartEmptyImg from '../assets/img/empty-cart.png'
 
-const CartEmpty = () => {
+const CartEmpty: React.FC = () => {
     return(
         <>
       <div className="cart cart--empty">
@@ -12,7 +12,7 @@ const CartEmpty = () => {
         </h2>
         <p>
         Most likely, you haven't ordered a pizza yet.
-          <br />
+          <br/>
           To order a pizza, go to the main page.
         </p>
         <img src={cartEmptyImg} alt="Empty cart" />

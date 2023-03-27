@@ -2,7 +2,16 @@ import React from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, selectCartItemById } from "../../redux/slice/cartSlice";
 
-const PizzaBlock = ({id, title, price, imageUrl, sizes, types }) => {
+type PizzaBlockProps = {
+  id: number;
+  title: string;
+  price: number;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+}
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({id, title, price, imageUrl, sizes, types }) => {
 
     const pizzaTypeText = ["thin", "traditional"]
     const dispatch = useDispatch()

@@ -2,41 +2,41 @@ import React from 'react';
 import { setSortValue, selectSort } from '../redux/slice/filterSlice'
 import { useDispatch, useSelector } from 'react-redux';
 
-export const list = [
+type ListItem = {
+  propertyName: string;
+  sortType: string;
+}
+
+export const list: ListItem[] = [
     { propertyName: 'Popularity', sortType: 'rating' },
     { propertyName: 'Price', sortType: 'price' },
     { propertyName: 'Alphabet', sortType: 'title' },
   ];
 
-
-function Sort() {
+const Sort: React.FC = () => {
 
   const [open, setOpen] = React.useState(false);
 
   const sort = useSelector(selectSort)
   const dispatch = useDispatch()
-  const sortRef = React.useRef()
+  const sortRef = React.useRef<HTMLDivElement>(null)
   // console.log(sortRef)
   
-  const onClickListItems = (obj) => {
+  const onClickListItems = (obj: ListItem) => {
     dispatch(setSortValue(obj));
     setOpen(false);
   };
-  // React.useEffect(() =>{
-  //   const handleClickOut = (e) => {
-  //     console.log(e)
-  //     if(!e.path.includes(sortRef.current)){
-  //       setOpen(false)
-  //     }
-  //   }
-  //   document.body.addEventListener('click', handleClickOut)
-
-  //   return () => document.body.removeEventListener('click', handleClickOut)
-    
-  // }, [])
+  React.useEffect(() =>{
+    const handleClickOut = (event: MouseEvent) => {
+      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
+        setOpen(false);
+      }
+    };
+    document.body.addEventListener('click', handleClickOut)
+    return () => document.body.removeEventListener('click', handleClickOut)
+  }, [])
   
   return (
-
     <div ref={sortRef} className="sort">
       <div onClick={() => setOpen(!open)} className="sort__label">
         <svg
