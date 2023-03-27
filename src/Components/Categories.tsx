@@ -2,7 +2,7 @@ import React from "react"
 
 type CategoriesProps = {
     categoryValue: number;
-    setCategoryOnClick: any;
+    setCategoryOnClick: (id: number) => void;
 }
 const Categories: React.FC<CategoriesProps> = (
     { setCategoryOnClick, categoryValue }) => {

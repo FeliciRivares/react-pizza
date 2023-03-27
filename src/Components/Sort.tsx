@@ -27,11 +27,9 @@ const Sort: React.FC = () => {
     setOpen(false);
   };
   React.useEffect(() =>{
-    const handleClickOut = (event: any) => {
-      const path: any = event.path || (event.composedPath && event.composedPath())
-      console.log(event)
-      if(path && !path.includes(sortRef.current)){
-        setOpen(false)
+    const handleClickOut = (event: MouseEvent) => {
+      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
+        setOpen(false);
       }
     };
     document.body.addEventListener('click', handleClickOut)
