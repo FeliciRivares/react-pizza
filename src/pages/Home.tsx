@@ -4,7 +4,7 @@ import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 
 
-import { setCategoryValue, setPageCount, setFilters, selectFilter } from '../redux/slice/filterSlice';
+import { setCategoryValue, setPageCount, setFilters, selectFilter, FilterSliceState } from '../redux/slice/filterSlice';
 import Categories from '../Components/Categories';
 import Sort from '../Components/Sort';
 import {list} from '../Components/Sort'
@@ -14,10 +14,11 @@ import Pagination from '../Components/Pagination';
 // import { SearchContext } from '../App';
 
 import { fetchPizzas, selectPizzaData } from '../redux/slice/pizzasSlice';
+import { useAppDispatch } from '../redux/store';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isMounted = React.useRef(false);
 
   const { items, status } = useSelector(selectPizzaData);
@@ -41,7 +42,6 @@ const Home: React.FC = () => {
     const search = searchValue ? `&search=${searchValue}` : '';
 
     dispatch(
-      // @ts-ignore
       fetchPizzas({
         sortBy,
         category,
@@ -64,7 +64,7 @@ const Home: React.FC = () => {
       navigate(`/?${queryString}`);
     }
     if (!window.location.search) {
-      fetchPizzas();
+      dispatch(fetchPizzas({}));
     }
   }, [categoryValue, sort.sortType, searchValue, currentPage]);
 
@@ -74,7 +74,7 @@ const Home: React.FC = () => {
 
   React.useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
+      const params = (qs.parse(window.location.search.substring(1)) as unknown) as FilterSliceState;
       const sort = list.find((obj) => obj.sortType === params.sortType);
       if (sort) {
         params.sort = sort;
