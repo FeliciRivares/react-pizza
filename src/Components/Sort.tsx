@@ -1,10 +1,10 @@
 import React from 'react';
-import { setSortValue, selectSort } from '../redux/slice/filterSlice'
+import { setSortValue, selectSort, Sort } from '../redux/slice/filterSlice'
 import { useDispatch, useSelector } from 'react-redux';
 
 type ListItem = {
   propertyName: string;
-  sortType: string;
+  sortType: 'rating' | 'title' | 'price';
 }
 
 export const list: ListItem[] = [
@@ -13,7 +13,7 @@ export const list: ListItem[] = [
     { propertyName: 'Alphabet', sortType: 'title' },
   ];
 
-const Sort: React.FC = () => {
+const SortPopup: React.FC = () => {
 
   const [open, setOpen] = React.useState(false);
 
@@ -73,4 +73,4 @@ const Sort: React.FC = () => {
     </div>
   );
 }
-export default Sort;
+export default SortPopup;
