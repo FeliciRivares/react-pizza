@@ -209,6 +209,12 @@ body {
             display: none;
           }
         }
+        &:disabled{
+          opacity: 0.3;
+          &:active{
+            transform: none;
+          }
+        }
       }
 
       b {

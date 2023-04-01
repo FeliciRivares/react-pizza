@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 
@@ -32,9 +32,9 @@ const Home: React.FC = () => {
 
   const { categoryValue, sort, currentPage, searchValue } = useSelector(selectFilter);
 
-  const onClickCategory = (id: number) => {
-    dispatch(setCategoryValue(id));
-  };
+  const onClickCategory = React.useCallback((id: number) => {
+    dispatch(setCategoryValue(id))
+  }, []);
 
   const onChangeCurrentPage = (number: number) => {
     dispatch(setPageCount(number));
@@ -101,7 +101,7 @@ const Home: React.FC = () => {
     // <Link key={obj.id}
     // to={`/pizza/${obj.id}`}
     // >
-    <PizzaBlock {...obj} />
+    <PizzaBlock key={obj.id} {...obj} />
     //  </Link>
   ));
 
@@ -109,7 +109,7 @@ const Home: React.FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories categoryValue={categoryValue} setCategoryOnClick={onClickCategory} />
-        <Sort />
+        <Sort value={sort} />
       </div>
       <h2 className="content__title">All pizzas</h2>
       {status === 'error' ? (

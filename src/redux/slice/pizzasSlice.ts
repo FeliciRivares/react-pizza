@@ -1,5 +1,3 @@
-import { Sort } from './filterSlice';
-import { CartItem } from './cartSlice';
 import { RootState } from './../store';
 import axios from 'axios';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';

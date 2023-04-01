@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from 'react-redux';
-import { addItem, removeItem, minusItem } from '../../redux/slice/cartSlice';
+import { addItem, removeItem, minusItem, CartItem } from '../../redux/slice/cartSlice';
 
 type CartItemProps = {
   id: number;
@@ -13,11 +13,11 @@ type CartItemProps = {
 };
 
 
-const CartItem: React.FC<CartItemProps> = ({ id, imageUrl, title, sizes, type, price, count }) => {
+const CartItemElem: React.FC<CartItemProps> = ({ id, imageUrl, title, sizes, type, price, count }) => {
     const dispatch = useDispatch()
     const onClickRemoveItem = () => dispatch(removeItem(id))
     const onClickMinusItem = () => dispatch(minusItem(id))
-    const onClickAddItem = () => dispatch(addItem({id}))
+    const onClickAddItem = () => dispatch(addItem({id} as CartItem))
 
     return(
         <>
@@ -34,7 +34,10 @@ const CartItem: React.FC<CartItemProps> = ({ id, imageUrl, title, sizes, type, p
               <p>{type},{sizes} см.</p>
             </div>
             <div className="cart__item-count">
-              <div onClick={onClickMinusItem} className="button button--outline button--circle cart__item-count-minus">
+              <button
+              disabled={count===1}
+               onClick={onClickMinusItem}
+                className="button button--outline button--circle cart__item-count-minus">
                 <svg
                   width="10"
                   height="10"
@@ -51,9 +54,10 @@ const CartItem: React.FC<CartItemProps> = ({ id, imageUrl, title, sizes, type, p
                     fill="#EB5A1E"
                   />
                 </svg>
-              </div>
+              </button>
               <b>{count}</b>
-              <div onClick={onClickAddItem} className="button button--outline button--circle cart__item-count-plus">
+              <button 
+               onClick={onClickAddItem} className="button button--outline button--circle cart__item-count-plus">
                 <svg
                   width="10"
                   height="10"
@@ -70,7 +74,7 @@ const CartItem: React.FC<CartItemProps> = ({ id, imageUrl, title, sizes, type, p
                     fill="#EB5A1E"
                   />
                 </svg>
-              </div>
+              </button>
             </div>
             <div className="cart__item-price">
               <b>{price * count} UAH</b>
@@ -100,4 +104,4 @@ const CartItem: React.FC<CartItemProps> = ({ id, imageUrl, title, sizes, type, p
     )
 }
 
-export default CartItem
+export default CartItemElem
