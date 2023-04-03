@@ -2,24 +2,21 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../redux/store';
 
-import {
-  setCategoryValue,
-  setPageCount,
-  setFilters,
-  selectFilter,
-  FilterSliceState,
-} from '../redux/slice/filterSlice';
+import {setCategoryValue, setPageCount,setFilters} from '../redux/slice/filter/slice';
+// import { FilterSliceState } from '../redux/slice/filter/type';
+import { selectFilter } from '../redux/slice/filter/selector';
 import Categories from '../Components/Categories';
 import Sort from '../Components/Sort';
 import { list } from '../Components/Sort';
 import PizzaBlock from '../Components/PizzaBlock';
 import PizzaBlockLoader from '../Components/PizzaBlock/PizzaBlockLoader';
 import Pagination from '../Components/Pagination';
-// import { SearchContext } from '../App';
+import { fetchPizzas} from '../redux/slice/pizzas/slice';
+import { FetchPizzasArg } from '../redux/slice/pizzas/type';
+import { selectPizzaData } from '../redux/slice/pizzas/selectors';
 
-import { fetchPizzas, FetchPizzasArg, selectPizzaData } from '../redux/slice/pizzasSlice';
-import { useAppDispatch } from '../redux/store';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -27,9 +24,6 @@ const Home: React.FC = () => {
   const isMounted = React.useRef(false);
 
   const { items, status } = useSelector(selectPizzaData);
-
-  // const { searchValue } = React.useContext(SearchContext);
-
   const { categoryValue, sort, currentPage, searchValue } = useSelector(selectFilter);
 
   const onClickCategory = React.useCallback((id: number) => {
@@ -80,9 +74,6 @@ const Home: React.FC = () => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1)) as unknown as FetchPizzasArg;
       const sort = list.find((obj) => obj.sortType === params.sortBy);
-      // if (sort) {
-      //   params.sortBy = sort;
-      // }
       dispatch(
         setFilters({
           searchValue: params.search,
