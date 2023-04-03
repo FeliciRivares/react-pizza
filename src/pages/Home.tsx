@@ -4,7 +4,7 @@ import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../redux/store';
 
-import {setCategoryValue, setPageCount,setFilters} from '../redux/slice/filter/slice';
+import { setCategoryValue, setPageCount, setFilters } from '../redux/slice/filter/slice';
 // import { FilterSliceState } from '../redux/slice/filter/type';
 import { selectFilter } from '../redux/slice/filter/selector';
 import Categories from '../Components/Categories';
@@ -13,10 +13,9 @@ import { list } from '../Components/Sort';
 import PizzaBlock from '../Components/PizzaBlock';
 import PizzaBlockLoader from '../Components/PizzaBlock/PizzaBlockLoader';
 import Pagination from '../Components/Pagination';
-import { fetchPizzas} from '../redux/slice/pizzas/slice';
+import { fetchPizzas } from '../redux/slice/pizzas/slice';
 import { FetchPizzasArg } from '../redux/slice/pizzas/type';
 import { selectPizzaData } from '../redux/slice/pizzas/selectors';
-
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -27,7 +26,7 @@ const Home: React.FC = () => {
   const { categoryValue, sort, currentPage, searchValue } = useSelector(selectFilter);
 
   const onClickCategory = React.useCallback((id: number) => {
-    dispatch(setCategoryValue(id))
+    dispatch(setCategoryValue(id));
   }, []);
 
   const onChangeCurrentPage = (number: number) => {

@@ -3,7 +3,7 @@ import { getCartFromLS } from '../../../utils/getCartFromLS';
 import { calcTotalPrice } from '../../../utils/calcTotalPrice';
 import { CartItem, CartSliceState } from './types';
 
-const {items, totalPrice} = getCartFromLS();
+const { items, totalPrice } = getCartFromLS();
 
 const initialState: CartSliceState = {
   items,
@@ -24,7 +24,7 @@ export const cartSlice = createSlice({
           count: 1,
         });
       }
-      state.totalPrice = calcTotalPrice(state.items)
+      state.totalPrice = calcTotalPrice(state.items);
     },
     minusItem(state, action: PayloadAction<number>) {
       const findItem = state.items.find((obj) => obj.id === action.payload);
@@ -47,8 +47,6 @@ export const cartSlice = createSlice({
     },
   },
 });
-
-
 
 export const { addItem, minusItem, removeItem, clearItems } = cartSlice.actions;
 
