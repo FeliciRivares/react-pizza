@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addItem, removeItem, minusItem } from '../../redux/slice/cart/slice';
-import { CartItem } from '../../redux/slice/cart/types';
+import { addItem, removeItem, minusItem } from '../../redux/cart/slice';
+import { CartItem } from '../../redux/cart/types';
 
 type CartItemProps = {
-  id: number;
+  id: string;
   imageUrl: string;
   title: string;
   sizes: number;
